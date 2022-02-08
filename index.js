@@ -82,10 +82,32 @@ function viewRoles() {
         promptUser()
     })
 }
-function viewEmployees(){
-    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT (manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON employee.manager_id = manager.id', function (err, results){
+function viewEmployees() {
+    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT (manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON employee.manager_id = manager.id', function (err, results) {
         console.table(results)
         promptUser()
     })
 }
 
+function viewBudget() {
+    db.query('SELECT * FROM employeetracker_db.department;', function (err, results) {
+        let departmentoptions = [];
+        results.forEach(result => departmentoptions.push({ name: result.name, value: result.id }));
+
+        return inquirer.prompt([
+            {
+                type: "list",
+                name: "viewDepartment",
+                message: "Choose a department budget to see?",
+                choices: departmentoptions
+            },
+        ])
+            .then((answer) => {
+                let departmentID = answer.viewDepartment;
+                db.query('SELECT SUM(role.salary) AS department_budget from employee JOIN role ON employee.role_id = role.id WHERE role.department_id = ?', [departmentID], function (err, results) {
+                    console.table(results)
+                    promptOptions();
+                })
+            })
+    })
+};
