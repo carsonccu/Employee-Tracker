@@ -29,6 +29,42 @@ function promptUser(){
     ])
 
     .then((options) => {
-        if
+        if (options.displayoptions === "SHOW All Departments"){
+            viewDepartments();
+        }
+        if (options.displayoptions === "SHOW All Roles"){
+            viewRoles();
+        }
+        if (options.displayoptions === "SHOW All Employees"){
+            viewEmployees();
+        }
+        if (options.displayoptions === "SHOW Employees by Department"){
+            viewEmployeesByDepartment();
+        }
+        if (options.displayoptions === "Add Department"){
+            addDepartment();
+        }
+        if (options.displayoptions === "Add Role"){
+            addRole();
+        }
+        if (options.displayoptions === "Add Employee"){
+            addEmployee();
+        }
+        if (options.displayoptions === "Update Employee Role"){
+            updateEmployee();
+        }
+        if (options.displayoptions === "Delete Department"){
+            deleteDepartment();
+        }
+        if (options.displayoptions === "Delete Role"){
+            deleteRole();
+        }
+        if (options.displayoptions === "Delete Employee"){
+            deleteEmployee();
+        }
+        if (options.displayoptions === "View Department Budget"){
+            viewBudget();
+        }
+
     })
-}
+};
