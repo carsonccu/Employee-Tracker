@@ -14,7 +14,11 @@ const db = mysql.createConnection(
     },
     console.log("connected to db")
 );
-
+db.connect((err) => {
+    if (err) {
+        throw error;
+    }
+});
 // run inquirer
 
 pomptUser()
@@ -111,3 +115,29 @@ function viewBudget() {
             })
     })
 };
+
+// ----------------add/delete employee------------------------
+
+function addEmployee() {
+    db.query('select * from company_db.employee ;', function (err, results) {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "employeefirstname",
+                message: "Please enter first name"
+            },
+            {
+                type: "input",
+                name: "employeelastname",
+                messgae: "Enter employees last name"
+            },
+            {
+                type: "input",
+                name: "employeeRole",
+                messgae: "Enter employees role"
+            },
+        ]).then((results) => {
+
+        })
+    })
+}
