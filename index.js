@@ -137,7 +137,10 @@ function addEmployee() {
                 messgae: "Enter employees role"
             },
         ]).then((results) => {
+            var employeelast = results.employeefirstname
+            var employeefirst =
+            var employeeRole =
 
-        })
+        }).
     })
 }
