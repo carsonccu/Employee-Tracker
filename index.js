@@ -119,7 +119,7 @@ function viewBudget() {
 // ----------------add/delete employee------------------------
 
 function addEmployee() {
-    db.query('select * from company_db.employee ;', function (err, results) {
+    db.query('SELECT * from company_db.employee;', function (err, results) {
         return inquirer.prompt([
             {
                 type: "input",
@@ -137,10 +137,30 @@ function addEmployee() {
                 messgae: "Enter employees role"
             },
         ]).then((results) => {
-            var employeelast = results.employeefirstname
-            var employeefirst =
-            var employeeRole =
+            var employeelast = results.employeelastname;
+            var employeefirst = results.employeefirstname;
+            var employeeR = results.employeeRole;
+            db.query('select * from `company_db.employee where manager_id is null;', function (err, results) {
+                var employeeArray = [];
+                results.forEach(result => employeeArray.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
+                return inquirer.prompt([
+                    {
+                        type: "list",
+                        name: "employeeManager",
+                        message: "Who is the manager?",
+                        choices: employeeArray
 
-        }).
+                    },
+
+
+                ]).then((data) => {
+                    db.query(`INSERT INTO company_db.employee (company_db.employee.first_name, company_db.employee.last_name, company_db.employee.role_id, company_db.employee.manager_id) Values("${employeefirst}", "${employeelast}",${employeeR}, ${data.employeeManager})`, function (err, results) {
+                        console.log(err);
+                    })
+                    promptUser();
+                })
+
+            })
+        })
     })
 }
