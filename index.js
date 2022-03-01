@@ -21,7 +21,7 @@ db.connect((err) => {
 });
 // run inquirer
 
-pomptUser()
+promptUser()
 function promptUser() {
     return inquirer.prompt([
         {
@@ -218,3 +218,72 @@ function addRole() {
     })
 };
 
+function deleteDepartment() {
+    db.query('SELECT * FROM company_db.department;', function (err, results) {
+        // console.table(results); //logs role table, id is referencing roles
+        let departmentOptions = [];
+        results.forEach(result => departmentOptions.push({ name: result.name, value: result.id }));
+
+        return inquirer.prompt([
+            {
+                type: "list",
+                name: "deleteDepartment",
+                message: "Which department would you like to delete?",
+                choices: departmentOptions
+            },
+        ])
+            .then((answer) => {
+                let departmentID = answer.deleteDepartment;
+                // console.log(departmentID)
+                db.query('DELETE FROM department WHERE id = ?', [departmentID], function (err, results) {
+                    promptOptions();
+                })
+            })
+    })
+};
+function deleteRole() {
+    db.query('SELECT * FROM company_db.role;', function (err, results) {
+        // console.table(results); //logs role table, id is referencing roles
+        let roleOptions = [];
+        results.forEach(result => roleOptions.push({ name: result.title, value: result.id }));
+
+        return inquirer.prompt([
+            {
+                type: "list",
+                name: "deleteRole",
+                message: "Which role would you like to delete?",
+                choices: roleOptions
+            },
+        ])
+            .then((answer) => {
+                let roleID = answer.deleteRole;
+                // console.log(roleID)
+                db.query('DELETE FROM role WHERE id = ?', [roleID], function (err, results) {
+                    promptOptions();
+                })
+            })
+    })
+};
+function deleteEmployee() {
+    db.query('SELECT * FROM company_db.employee;', function (err, results) {
+        // console.table(results); //logs employee table, id is referencing employees
+        let employeeOptions = [];
+        results.forEach(result => employeeOptions.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
+        // console.log(employeeOptions);
+        return inquirer.prompt([
+            {
+                type: "list",
+                name: "deleteEmployee",
+                message: "Which employee would you like to fire/delete?",
+                choices: employeeOptions
+            },
+        ])
+            .then((answer) => {
+                let employeeID = answer.deleteEmployee;
+                // console.log(employeeID)
+                db.query('DELETE FROM employee WHERE id = ?', [employeeID], function (err, results) {
+                    promptOptions();
+                })
+            })
+    })
+};
