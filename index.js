@@ -94,7 +94,7 @@ function viewEmployees() {
 }
 
 function viewBudget() {
-    db.query('SELECT * FROM employeetracker_db.department;', function (err, results) {
+    db.query('SELECT * FROM company_db.department;', function (err, results) {
         let departmentoptions = [];
         results.forEach(result => departmentoptions.push({ name: result.name, value: result.id }));
 
@@ -110,7 +110,7 @@ function viewBudget() {
                 let departmentID = answer.viewDepartment;
                 db.query('SELECT SUM(role.salary) AS department_budget from employee JOIN role ON employee.role_id = role.id WHERE role.department_id = ?', [departmentID], function (err, results) {
                     console.table(results)
-                    promptOptions();
+                    promptUser();
                 })
             })
     })
@@ -140,6 +140,7 @@ function addEmployee() {
             var employeelast = results.employeelastname;
             var employeefirst = results.employeefirstname;
             var employeeR = results.employeeRole;
+            console.log("carson");
             console.table(results);
             db.query('select * from `company_db.employee where manager_id is null;', function (err, results) {
                 var employeeArray = [];
@@ -221,7 +222,6 @@ function addRole() {
 
 function deleteDepartment() {
     db.query('SELECT * FROM company_db.department;', function (err, results) {
-        // console.table(results); //logs role table, id is referencing roles
         let departmentOptions = [];
         results.forEach(result => departmentOptions.push({ name: result.name, value: result.id }));
 
@@ -235,7 +235,6 @@ function deleteDepartment() {
         ])
             .then((answer) => {
                 let departmentID = answer.deleteDepartment;
-                // console.log(departmentID)
                 db.query('DELETE FROM department WHERE id = ?', [departmentID], function (err, results) {
                     promptUser();
                 })
@@ -244,7 +243,6 @@ function deleteDepartment() {
 };
 function deleteRole() {
     db.query('SELECT * FROM company_db.role;', function (err, results) {
-        // console.table(results); //logs role table, id is referencing roles
         let roleOptions = [];
         results.forEach(result => roleOptions.push({ name: result.title, value: result.id }));
 
@@ -258,7 +256,6 @@ function deleteRole() {
         ])
             .then((answer) => {
                 let roleID = answer.deleteRole;
-                // console.log(roleID)
                 db.query('DELETE FROM role WHERE id = ?', [roleID], function (err, results) {
                     promptUser();
                 })
@@ -267,10 +264,8 @@ function deleteRole() {
 };
 function deleteEmployee() {
     db.query('SELECT * FROM company_db.employee;', function (err, results) {
-        // console.table(results); //logs employee table, id is referencing employees
         let employeeOptions = [];
         results.forEach(result => employeeOptions.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
-        // console.log(employeeOptions);
         return inquirer.prompt([
             {
                 type: "list",
@@ -281,7 +276,6 @@ function deleteEmployee() {
         ])
             .then((answer) => {
                 let employeeID = answer.deleteEmployee;
-                // console.log(employeeID)
                 db.query('DELETE FROM employee WHERE id = ?', [employeeID], function (err, results) {
                     promptUser();
                 })
