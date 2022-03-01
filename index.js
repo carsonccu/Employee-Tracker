@@ -140,6 +140,7 @@ function addEmployee() {
             var employeelast = results.employeelastname;
             var employeefirst = results.employeefirstname;
             var employeeR = results.employeeRole;
+            console.table(results);
             db.query('select * from `company_db.employee where manager_id is null;', function (err, results) {
                 var employeeArray = [];
                 results.forEach(result => employeeArray.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
@@ -236,7 +237,7 @@ function deleteDepartment() {
                 let departmentID = answer.deleteDepartment;
                 // console.log(departmentID)
                 db.query('DELETE FROM department WHERE id = ?', [departmentID], function (err, results) {
-                    promptOptions();
+                    promptUser();
                 })
             })
     })
@@ -259,7 +260,7 @@ function deleteRole() {
                 let roleID = answer.deleteRole;
                 // console.log(roleID)
                 db.query('DELETE FROM role WHERE id = ?', [roleID], function (err, results) {
-                    promptOptions();
+                    promptUser();
                 })
             })
     })
@@ -282,7 +283,7 @@ function deleteEmployee() {
                 let employeeID = answer.deleteEmployee;
                 // console.log(employeeID)
                 db.query('DELETE FROM employee WHERE id = ?', [employeeID], function (err, results) {
-                    promptOptions();
+                    promptUser();
                 })
             })
     })
