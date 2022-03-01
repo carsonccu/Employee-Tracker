@@ -157,10 +157,31 @@ function addEmployee() {
                     db.query(`INSERT INTO company_db.employee (company_db.employee.first_name, company_db.employee.last_name, company_db.employee.role_id, company_db.employee.manager_id) Values("${employeefirst}", "${employeelast}",${employeeR}, ${data.employeeManager})`, function (err, results) {
                         console.log(err);
                     })
+                    viewEmployees();
                     promptUser();
                 })
 
             })
         })
     })
+}
+function addDepartment() {
+
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "departmentName",
+            message: "Please enter a department name"
+        }
+    ]).then((results) => {
+
+
+        db.query(` INSERT INTO department set name = ("${results.departmentName}") ;`
+            , function (err, results) {
+                viewDepartments()
+                promptUser()
+            })
+    }
+    )
+
 }
