@@ -30,6 +30,7 @@ Start the application with the below command:
 node index.js
 ```
 ## Video
+* https://www.awesomescreenshot.com/video/7662726
 
 ## Screenshot
 ![Screenshot of departments](assets/departments.png)

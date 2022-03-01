@@ -140,8 +140,6 @@ function addEmployee() {
             var employeelast = results.employeelastname;
             var employeefirst = results.employeefirstname;
             var employeeR = results.employeeRole;
-            console.log("carson");
-            console.table(results);
             db.query('select * from `company_db.employee where manager_id is null;', function (err, results) {
                 var employeeArray = [];
                 results.forEach(result => employeeArray.push({ name: result.first_name + ' ' + result.last_name, value: result.id }));
@@ -167,6 +165,7 @@ function addEmployee() {
         })
     })
 }
+
 function addDepartment() {
 
     return inquirer.prompt([
