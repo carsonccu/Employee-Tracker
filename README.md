@@ -32,6 +32,8 @@ node index.js
 ## Video
 
 ## Screenshot
+![Screenshot of departments](assets/departments.png)
+![Screenshot of roles](assets/roles.png)
 
 ## Links
 * https://github.com/carsonccu/Employee-Tracker
